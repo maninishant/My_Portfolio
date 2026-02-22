@@ -1,487 +1,298 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nishant Mani — Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap"
+    rel="stylesheet"
+  />
 
-/* ── LIGHT THEME ── */
-[data-theme="light"] {
-  --bg:      #fff8f0;
-  --bg2:     #fff0fa;
-  --surface: #ffffff;
-  --surf2:   #fdf0ff;
-  --accent:  #FF6B6B;
-  --accent2: #ff9a00;
-  --accent3: #ffe033;
-  --blue:    #1a1aff;
-  --text:    #16003a;
-  --muted:   #8e6aab;
-  --border:  rgba(232,0,111,0.18);
-  --card:    #fff5fb;
-  --shadow:  rgba(232,0,111,0.12);
-}
-
-/* ── DARK THEME ── */
-[data-theme="dark"] {
-  --bg:      #0d0014;
-  --bg2:     #100019;
-  --surface: #17002a;
-  --surf2:   #1e0033;
-  --accent:  #ff2d9b;
-  --accent2: #ffaa00;
-  --accent3: #ffe033;
-  --blue:    #6060ff;
-  --text:    #f5e6ff;
-  --muted:   #9070bb;
-  --border:  rgba(255,45,155,0.2);
-  --card:    #1e0033;
-  --shadow:  rgba(255,45,155,0.18);
-}
-
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Mono', monospace;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  cursor: none;
-  transition: background 0.4s, color 0.4s;
-}
-
-/* blobs */
-.blob { position:fixed; border-radius:50%; filter:blur(90px); opacity:0.16; pointer-events:none; z-index:0; transition:background 0.4s; }
-.b1 { width:500px;height:500px;background:var(--accent);top:-130px;right:-130px; }
-.b2 { width:380px;height:380px;background:var(--blue);bottom:5vh;left:-100px; }
-.b3 { width:280px;height:280px;background:var(--accent2);top:55vh;right:8vw; }
-
-/* cursor */
-.cursor { position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background .3s; }
-.cursor-ring { position:fixed;width:34px;height:34px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .2s,height .2s,opacity .2s,border-color .3s; }
-
-/* theme toggle */
-.theme-btn {
-  position:fixed;top:22px;right:56px;z-index:200;
-  background:var(--surface);border:2px solid var(--border);border-radius:40px;
-  padding:6px 14px;display:flex;align-items:center;gap:8px;
-  cursor:pointer;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
-  letter-spacing:.08em;color:var(--muted);
-  transition:border-color .3s,background .3s,color .3s;
-  box-shadow:0 2px 16px var(--shadow);
-}
-.theme-btn:hover { border-color:var(--accent);color:var(--accent); }
-.knob {
-  width:18px;height:18px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;align-items:center;justify-content:center;font-size:11px;
-}
-
-/* nav */
-nav { position:fixed;top:50%;left:26px;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:24px; }
-nav a {
-  font-family:'Syne',sans-serif;font-weight:700;font-size:10px;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:var(--muted);text-decoration:none;
-  writing-mode:vertical-rl;transform:rotate(180deg);
-  transition:color .35s,letter-spacing .35s,text-shadow .35s;
-  position:relative;
-}
-nav a::after {
-  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:2px;height:0;
-  background:linear-gradient(to bottom,var(--accent),var(--accent2));
-  transition:height .35s;
-}
-nav a.active,nav a:hover { color:var(--accent);letter-spacing:.22em;text-shadow:0 0 12px var(--accent); }
-nav a.active::after { height:100%; }
-
-/* scroll line */
-.scroll-line { position:fixed;right:26px;top:50%;transform:translateY(-50%);width:2px;height:100px;background:var(--border);z-index:100;border-radius:2px; }
-.scroll-fill { width:100%;height:0%;background:linear-gradient(to bottom,var(--accent),var(--blue));transition:height .1s;border-radius:2px; }
-
-/* sections */
-section { min-height:100vh;display:flex;align-items:center;padding:80px 110px 80px 106px;position:relative;z-index:1; }
-
-/* home */
-#home { justify-content:center;gap:72px; }
-
-.photo-wrap { position:relative;flex-shrink:0; }
-.photo-frame {
-  width:268px;height:328px;border:2.5px solid var(--border);
-  position:relative;overflow:hidden;border-radius:4px;
-  box-shadow:8px 8px 0 var(--accent2),0 20px 60px var(--shadow);
-  transition:box-shadow .3s;
-}
-.photo-frame:hover { box-shadow:12px 12px 0 var(--accent),0 24px 80px var(--shadow); }
-.photo-frame::after { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,0,111,.08),transparent 60%);z-index:2;pointer-events:none; }
-
-/* placeholder */
-.ph { width:100%;height:100%;background:var(--surf2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px; }
-.ph svg { width:70px;height:70px;opacity:.25; }
-.ph span { font-size:9px;color:var(--muted);letter-spacing:.12em; }
-
-/* real image */
-.photo-frame img.real {
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;display:none;z-index:1;
-}
-
-.corner { position:absolute;width:22px;height:22px;border-color:var(--accent);border-style:solid; }
-.tl { top:-5px;left:-5px;border-width:2px 0 0 2px; }
-.tr { top:-5px;right:-5px;border-width:2px 2px 0 0; }
-.bl { bottom:-5px;left:-5px;border-width:0 0 2px 2px; }
-.br { bottom:-5px;right:-5px;border-width:0 2px 2px 0; }
-
-.home-text { max-width:500px; }
-.greeting { font-size:11px;color:var(--blue);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px; }
-[data-theme="dark"] .greeting { color:var(--accent3); }
-.hname { font-family:'Syne',sans-serif;font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:1.02;margin-bottom:18px;letter-spacing:-.02em; }
-.hname .n2 { color:var(--accent);display:block;text-shadow:3px 3px 0 var(--accent3); }
-[data-theme="dark"] .hname .n2 { text-shadow:3px 3px 0 var(--blue); }
-.role { font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:28px;border-left:3px solid var(--accent2);padding-left:14px; }
-.desc { font-size:13px;line-height:1.85;opacity:.72;margin-bottom:36px; }
-.cta {
-  display:inline-block;padding:13px 30px;background:var(--accent);color:#fff;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;
-  text-transform:uppercase;text-decoration:none;border-radius:2px;
-  box-shadow:4px 4px 0 var(--blue);transition:background .2s,transform .2s,box-shadow .2s;
-}
-.cta:hover { background:var(--blue);color:var(--accent3);transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--accent); }
-
-/* section headings */
-.stag { font-size:10px;letter-spacing:.25em;color:var(--accent2);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px; }
-.stag::before { content:'';width:28px;height:2px;background:var(--accent2);border-radius:2px; }
-.stitle { font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-bottom:50px; }
-.stitle em { font-style:normal;color:var(--accent); }
-
-/* education */
-#education { flex-direction:column; }
-.etimeline { display:flex;flex-direction:column;max-width:680px;position:relative; }
-.etimeline::before { content:'';position:absolute;left:14px;top:24px;bottom:24px;width:2px;background:linear-gradient(to bottom,var(--accent),var(--blue),transparent);border-radius:2px; }
-.ecard { display:flex;gap:34px;padding:28px 0 28px 54px;position:relative;transition:transform .3s; }
-.ecard:hover { transform:translateX(8px); }
-.edot { position:absolute;left:5px;top:34px;width:20px;height:20px;border:2.5px solid var(--accent);background:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center; }
-.edot::after { content:'';width:7px;height:7px;background:var(--accent);border-radius:50%; }
-.eyear { font-size:10px;color:var(--blue);letter-spacing:.1em;min-width:90px;margin-top:4px; }
-[data-theme="dark"] .eyear { color:var(--accent3); }
-.einfo h3 { font-family:'Syne',sans-serif;font-size:19px;font-weight:700;margin-bottom:5px; }
-.einfo .inst { font-size:12px;color:var(--muted);margin-bottom:12px; }
-.ebadge { display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:1.5px solid var(--accent);font-size:11px;color:var(--accent);background:rgba(232,0,111,.07);border-radius:2px;font-weight:700;letter-spacing:.05em; }
-
-/* experience */
-#experience { flex-direction:column;background:var(--bg2); }
-.exp-list { display:flex;flex-direction:column;gap:3px;max-width:680px; }
-.expcard {
-  background:var(--surface);border:1.5px solid var(--border);
-  padding:28px 32px;position:relative;overflow:hidden;
-  transition:border-color .3s,transform .3s,box-shadow .3s;border-radius:4px;
-}
-.expcard:hover { border-color:var(--accent2);transform:translateX(6px);box-shadow:-4px 0 0 var(--accent2); }
-.expcard::before { content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2)); }
-.exptitle { font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px; }
-.exporg { font-size:12px;color:var(--accent);margin-bottom:6px;font-weight:600;letter-spacing:.05em; }
-.expperiod { display:inline-block;font-size:10px;background:rgba(255,154,0,.12);color:var(--accent2);padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.08em;font-weight:600; }
-.expdesc { font-size:12px;color:var(--muted);line-height:1.75; }
-
-/* projects */
-#projects { flex-direction:column; }
-.pgrid { display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:860px; }
-.pcard {
-  aspect-ratio:4/3;background:var(--card);border:1.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;
-  position:relative;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s;border-radius:4px;
-}
-.pcard:hover { border-color:var(--accent);transform:scale(1.03) rotate(-.5deg);box-shadow:0 8px 32px var(--shadow);z-index:2; }
-.pcard::before { content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(232,0,111,.07),transparent 70%); }
-.pcsi { font-size:30px; }
-.pcsb { width:28px;height:2px;background:linear-gradient(to right,var(--accent),var(--accent2));border-radius:2px;animation:pb 2s ease-in-out infinite; }
-@keyframes pb { 0%,100%{width:18px;opacity:.4} 50%{width:42px;opacity:1} }
-.pcst { font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted); }
-
-/* tech */
-#techstack { flex-direction:column;background:var(--bg2); }
-.tgrid { display:flex;gap:18px;flex-wrap:wrap;max-width:680px; }
-.titem {
-  display:flex;flex-direction:column;align-items:center;gap:12px;
-  padding:26px 30px;background:var(--surface);border:1.5px solid var(--border);
-  position:relative;overflow:hidden;min-width:110px;border-radius:4px;cursor:default;
-  transition:border-color .3s,transform .3s,box-shadow .3s;
-}
-.titem:hover { transform:translateY(-8px) rotate(-1deg); }
-.titem::after { content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--accent),var(--accent2));transform:scaleX(0);transition:transform .3s;transform-origin:left; }
-.titem:hover::after { transform:scaleX(1); }
-.tico { font-size:42px;line-height:1; }
-.tnm { font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .3s; }
-.titem:hover .tnm { color:var(--text); }
-
-/* contact */
-#contact { flex-direction:column; }
-.cintro { font-size:13px;color:var(--muted);line-height:1.85;margin-bottom:44px;max-width:500px; }
-.clinks { display:flex;flex-direction:column;gap:3px;max-width:580px; }
-.clink {
-  display:flex;align-items:center;gap:18px;padding:18px 22px;
-  background:var(--surface);border:1.5px solid var(--border);
-  color:var(--text);text-decoration:none;font-size:13px;
-  transition:border-color .3s,transform .25s,color .3s,box-shadow .3s;border-radius:4px;
-}
-.clink:hover { border-color:var(--accent);transform:translateX(10px);color:var(--accent);box-shadow:-4px 0 0 var(--accent); }
-.cico { font-size:20px;width:26px;text-align:center; }
-.clbl { font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.05em; }
-.cval { margin-left:auto;font-size:11px;color:var(--muted);letter-spacing:.04em; }
-
-/* reveal */
-.reveal { opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease; }
-.reveal.visible { opacity:1;transform:translateY(0); }
-
-@media(max-width:768px){
-  nav{left:6px;gap:16px;}
-  section{padding:60px 44px 60px 44px;}
-  #home{flex-direction:column;gap:40px;}
-  .photo-frame{width:200px;height:250px;}
-  .pgrid{grid-template-columns:1fr 1fr;}
-  .theme-btn{right:12px;top:12px;}
-}
-</style>
+  <link rel="stylesheet" href="style.css">
+  
 </head>
 <body>
 
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
+  <!-- Background blobs -->
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
 
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="curRing"></div>
+  <!-- Custom cursor -->
+  <div class="cursor" id="cur"></div>
+  <div class="cursor-ring" id="curRing"></div>
 
-<button class="theme-btn" onclick="toggleTheme()">
-  <div class="knob" id="knob">🌙</div>
-  <span id="tlbl">DARK</span>
-</button>
+  <!-- Dark / Light toggle -->
+  <button class="theme-btn" onclick="toggleTheme()">
+    <div class="knob" id="knob">🌙</div>
+    <span id="tlbl">DARK</span>
+  </button>
 
-<nav id="sidenav">
-  <a href="#home"       class="active" data-section="home">Home</a>
-  <a href="#education"  data-section="education">Education</a>
-  <a href="#experience" data-section="experience">Experience</a>
-  <a href="#projects"   data-section="projects">Projects</a>
-  <a href="#techstack"  data-section="techstack">Tech Stack</a>
-  <a href="#contact"    data-section="contact">Contact</a>
-</nav>
+  <!-- Sidebar navigation -->
+  <nav id="sidenav">
+    <a href="#home"       class="active" data-section="home">Home</a>
+    <a href="#education"  data-section="education">Education</a>
+    <a href="#experience" data-section="experience">Experience</a>
+    <a href="#projects"   data-section="projects">Projects</a>
+    <a href="#techstack"  data-section="techstack">Tech Stack</a>
+    <a href="#contact"    data-section="contact">Contact</a>
+  </nav>
 
-<div class="scroll-line"><div class="scroll-fill" id="sf"></div></div>
-
-<!-- HOME -->
-<section id="home">
-  <div class="photo-wrap reveal">
-    <div class="photo-frame">
-      <!--
-        ★ TO ADD YOUR PHOTO:
-          1. Save your image as  photo.jpg  (or any name)
-          2. Put it in the SAME folder as this HTML file
-          3. Change "photo.jpg" below to your filename
-          The placeholder disappears automatically when the image loads!
-      -->
-      <div class="ph" id="ph">
-        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="28" r="18" fill="#e8006f" opacity="0.35"/>
-          <path d="M8 72c0-17.7 14.3-32 32-32s32 14.3 32 32" fill="#e8006f" opacity="0.2"/>
-        </svg>
-        <span>ADD YOUR PHOTO</span>
-      </div>
-      <img class="real" src="NIMI.jpeg" alt="Profile Photo"
-           onload="this.style.display='block';document.getElementById('ph').style.display='none';"
-           onerror="this.style.display='none';">
-    </div>
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
+  <!-- Scroll progress indicator -->
+  <div class="scroll-line">
+    <div class="scroll-fill" id="sf"></div>
   </div>
 
-  <div class="home-text reveal" style="transition-delay:.15s">
-    <p class="greeting">// hello, world ✨</p>
-    <h1 class="hname">NISHANT<span class="n2">MANI.</span></h1>
-    <p class="role">CSE Student · Developer · Builder</p>
-    <p class="desc">Pursuing B.Tech in CSE (Data Science) at USICT, GGSIPU. Passionate about building things for the web and beyond.</p>
-    <a href="#education" class="cta">Explore ↓</a>
-  </div>
-</section>
 
-<!-- EDUCATION -->
-<section id="education">
-  <div>
-    <div class="stag reveal">02 / Education</div>
-    <h2 class="stitle reveal" style="transition-delay:.1s">Academic<br><em>Journey.</em></h2>
-    <div class="etimeline">
-      <div class="ecard reveal" style="transition-delay:.2s">
-        <div class="edot"></div>
-        <div class="eyear">2022 – 2025</div>
-        <div class="einfo">
-          <h3>Diploma in Computer Science &amp; Engineering</h3>
-          <p class="inst">Delhi Skill &amp; Entrepreneurship University (DSEU)</p>
-          <div class="ebadge">⭐ CGPA: 8.6 / 10</div>
-        </div>
-      </div>
-      <div class="ecard reveal" style="transition-delay:.35s">
-        <div class="edot"></div>
-        <div class="eyear">2025 – 2028</div>
-        <div class="einfo">
-          <h3>B.Tech CSE (Data Science)</h3>
-          <p class="inst">USICT, Guru Gobind Singh Indraprastha University</p>
-          <div class="ebadge">🚀 In Progress</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- ============================================================
+       HOME
+  ============================================================ -->
+  <section id="home">
 
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div>
-    <div class="stag reveal">03 / Experience</div>
-    <h2 class="stitle reveal" style="transition-delay:.1s">Where I've<br><em>Contributed.</em></h2>
-    <div class="exp-list">
-      <div class="expcard reveal" style="transition-delay:.2s">
-        <div class="exptitle">Academic Cell Coordinator</div>
-        <div class="exporg">Delhi Skill &amp; Entrepreneurship University (DSEU)</div>
-        <div class="expperiod">2022 – 2025</div>
-        <p class="expdesc">
-          Coordinated academic activities and events at DSEU, managed student-faculty communications, assisted in scheduling and organising academic programmes, and supported the administrative operations of the Academic Cell throughout the diploma tenure.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div>
-    <div class="stag reveal">04 / Projects</div>
-    <h2 class="stitle reveal" style="transition-delay:.1s">Things I'm<br><em>Building.</em></h2>
-    <div class="pgrid">
-      <div class="pcard reveal" style="transition-delay:.2s">
-        <div class="pcsi">⚡</div><div class="pcsb"></div><div class="pcst">Coming Soon</div>
-      </div>
-      <div class="pcard reveal" style="transition-delay:.3s">
-        <div class="pcsi">🔧</div><div class="pcsb"></div><div class="pcst">Coming Soon</div>
-      </div>
-      <div class="pcard reveal" style="transition-delay:.4s">
-        <div class="pcsi">🚀</div><div class="pcsb"></div><div class="pcst">Coming Soon</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TECH STACK -->
-<section id="techstack">
-  <div>
-    <div class="stag reveal">05 / Tech Stack</div>
-    <h2 class="stitle reveal" style="transition-delay:.1s">Tools of<br><em>The Trade.</em></h2>
-    <div class="tgrid">
-      <div class="titem reveal" style="transition-delay:.2s"><div class="tico">🌐</div><div class="tnm">HTML</div></div>
-      <div class="titem reveal" style="transition-delay:.3s"><div class="tico">🎨</div><div class="tnm">CSS</div></div>
-      <div class="titem reveal" style="transition-delay:.4s"><div class="tico">⚙️</div><div class="tnm">JavaScript</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div>
-    <div class="stag reveal">06 / Contact</div>
-    <h2 class="stitle reveal" style="transition-delay:.1s">Let's<br><em>Connect.</em></h2>
-    <p class="cintro reveal" style="transition-delay:.2s">Open to opportunities, collabs and cool conversations. Reach out anytime!</p>
-    <div class="clinks">
-      <!--
-        Gmail link explanation:
-        Using https://mail.google.com/mail/?view=cm&to=... opens Gmail in the browser directly.
-        Replace youremail@gmail.com with your actual Gmail address.
-      -->
-      <a href="https://mail.google.com/mail/?view=cm&to=nishant22mani@gmail.com"
-         target="_blank" class="clink reveal" style="transition-delay:.3s">
-        <span class="cico">✉️</span>
-        <span class="clbl">Gmail</span>
-        <span class="cval">nishant22mani@gmail.com</span>
-      </a>
-      <a href="https://github.com/maninishant" target="_blank" class="clink reveal" style="transition-delay:.4s">
-        <span class="cico">🐙</span>
-        <span class="clbl">GitHub</span>
-        <span class="cval">github.com/maninishant</span>
-      </a>
-      <a href="https://www.linkedin.com/in/nishant-mani-65b9b42a2" target="_blank" class="clink reveal" style="transition-delay:.5s">
-        <span class="cico">🔗</span>
-        <span class="clbl">LinkedIn</span>
-        <span class="cval">linkedin.com/in/nishant-mani</span>
-      </a>
-      <a href="https://medium.com/@nishant22mani" target="_blank" class="clink reveal" style="transition-delay:.6s">
-        <span class="cico" style="display:flex;align-items:center;justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 195 195" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="195" height="195" rx="0" fill="none"/>
-            <ellipse cx="59" cy="97.5" rx="59" ry="59" fill="currentColor" opacity="0.85"/>
-            <ellipse cx="145" cy="97.5" rx="34" ry="49" fill="currentColor" opacity="0.6"/>
-            <ellipse cx="185" cy="97.5" rx="10" ry="38" fill="currentColor" opacity="0.45"/>
+    <div class="photo-wrap reveal">
+      <div class="photo-frame">
+        <!--
+          HOW TO ADD YOUR PHOTO:
+          • Put NIMI.jpeg in the same folder as this HTML file.
+          • The placeholder hides automatically once the image loads.
+          • To use a different filename, change "NIMI.jpeg" below.
+        -->
+        <div class="ph" id="ph">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="28" r="18" fill="#e8006f" opacity="0.35"/>
+            <path d="M8 72c0-17.7 14.3-32 32-32s32 14.3 32 32" fill="#e8006f" opacity="0.2"/>
           </svg>
-        </span>
-        <span class="clbl">Medium</span>
-        <span class="cval">medium.com/@nishant22mani</span>
-      </a>
+          <span>ADD YOUR PHOTO</span>
+        </div>
+        <img
+          class="real"
+          src="NIMI.jpeg"
+          alt="Nishant Mani"
+          onload="this.style.display='block'; document.getElementById('ph').style.display='none';"
+          onerror="this.style.display='none';"
+        />
+      </div>
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
     </div>
-  </div>
-</section>
 
-<script>
-// THEME
-function toggleTheme(){
-  const h=document.documentElement,dark=h.getAttribute('data-theme')==='dark';
-  h.setAttribute('data-theme',dark?'light':'dark');
-  document.getElementById('knob').textContent=dark?'🌙':'☀️';
-  document.getElementById('tlbl').textContent=dark?'DARK':'LIGHT';
-  localStorage.setItem('theme',dark?'light':'dark');
-}
-(function(){
-  const s=localStorage.getItem('theme');
-  if(s){
-    document.documentElement.setAttribute('data-theme',s);
-    document.getElementById('knob').textContent=s==='dark'?'☀️':'🌙';
-    document.getElementById('tlbl').textContent=s==='dark'?'LIGHT':'DARK';
-  }
-})();
+    <div class="home-text reveal" style="transition-delay: 0.15s;">
+      <p class="greeting">// hello, world ✨</p>
+      <h1 class="hname">
+        NISHANT
+        <span class="n2">MANI.</span>
+      </h1>
+      <p class="role">CSE Student · Developer · Builder</p>
+      <p class="desc">
+        Pursuing B.Tech in CSE (Data Science) at USICT, GGSIPU.
+        Passionate about building things for the web and beyond.
+      </p>
+      <a href="#education" class="cta">Explore ↓</a>
+    </div>
 
-// CURSOR
-const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function a(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
-document.querySelectorAll('a,button,.titem').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='54px';ring.style.height='54px';ring.style.opacity='.85';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px';ring.style.opacity='.5';});
-});
+  </section>
 
-// SCROLL PROGRESS
-const sf=document.getElementById('sf');
-window.addEventListener('scroll',()=>{
-  const p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
-  sf.style.height=Math.min(p,100)+'%';
-});
 
-// ACTIVE NAV
-const secs=document.querySelectorAll('section'),links=document.querySelectorAll('nav a');
-new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      links.forEach(l=>l.classList.remove('active'));
-      const a=document.querySelector(`nav a[data-section="${e.target.id}"]`);
-      if(a)a.classList.add('active');
-    }
-  });
-},{threshold:.4}).observe&&secs.forEach(s=>new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`nav a[data-section="${e.target.id}"]`);if(a)a.classList.add('active');}});
-},{threshold:.4}).observe(s));
+  <!-- ============================================================
+       EDUCATION
+  ============================================================ -->
+  <section id="education">
+    <div>
 
-// REVEAL
-const revs=document.querySelectorAll('.reveal');
-new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1})
-  .observe&&revs.forEach(r=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1}).observe(r));
-document.querySelectorAll('#home .reveal').forEach(e=>e.classList.add('visible'));
-</script>
+      <div class="stag reveal">02 / Education</div>
+      <h2 class="stitle reveal" style="transition-delay: 0.1s;">Academic<br><em>Journey.</em></h2>
+
+      <div class="etimeline">
+
+        <div class="ecard reveal" style="transition-delay: 0.2s;">
+          <div class="edot"></div>
+          <div class="eyear">2022 – 2025</div>
+          <div class="einfo">
+            <h3>Diploma in Computer Science &amp; Engineering</h3>
+            <p class="inst">Delhi Skill &amp; Entrepreneurship University (DSEU)</p>
+            <div class="ebadge">⭐ CGPA: 8.6 / 10</div>
+          </div>
+        </div>
+
+        <div class="ecard reveal" style="transition-delay: 0.35s;">
+          <div class="edot"></div>
+          <div class="eyear">2025 – 2028</div>
+          <div class="einfo">
+            <h3>B.Tech CSE (Data Science)</h3>
+            <p class="inst">USICT, Guru Gobind Singh Indraprastha University</p>
+            <div class="ebadge">🚀 In Progress</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       EXPERIENCE
+  ============================================================ -->
+  <section id="experience">
+    <div>
+
+      <div class="stag reveal">03 / Experience</div>
+      <h2 class="stitle reveal" style="transition-delay: 0.1s;">Where I've<br><em>Contributed.</em></h2>
+
+      <div class="exp-list">
+        <div class="expcard reveal" style="transition-delay: 0.2s;">
+          <div class="exptitle">Academic Cell Coordinator</div>
+          <div class="exporg">Delhi Skill &amp; Entrepreneurship University (DSEU)</div>
+          <div class="expperiod">2022 – 2025</div>
+          <p class="expdesc">
+            Coordinated academic activities and events at DSEU, managed student-faculty
+            communications, assisted in scheduling and organising academic programmes,
+            and supported the administrative operations of the Academic Cell throughout
+            the diploma tenure.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PROJECTS
+  ============================================================ -->
+  <section id="projects">
+    <div>
+
+      <div class="stag reveal">04 / Projects</div>
+      <h2 class="stitle reveal" style="transition-delay: 0.1s;">Things I'm<br><em>Building.</em></h2>
+
+      <div class="pgrid">
+        <div class="pcard reveal" style="transition-delay: 0.2s;">
+          <div class="pcsi">⚡</div>
+          <div class="pcsb"></div>
+          <div class="pcst">Coming Soon</div>
+        </div>
+        <div class="pcard reveal" style="transition-delay: 0.3s;">
+          <div class="pcsi">🔧</div>
+          <div class="pcsb"></div>
+          <div class="pcst">Coming Soon</div>
+        </div>
+        <div class="pcard reveal" style="transition-delay: 0.4s;">
+          <div class="pcsi">🚀</div>
+          <div class="pcsb"></div>
+          <div class="pcst">Coming Soon</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       TECH STACK
+  ============================================================ -->
+  <section id="techstack">
+    <div>
+
+      <div class="stag reveal">05 / Tech Stack</div>
+      <h2 class="stitle reveal" style="transition-delay: 0.1s;">Tools of<br><em>The Trade.</em></h2>
+
+      <div class="tgrid">
+        <div class="titem reveal" style="transition-delay: 0.2s;">
+          <div class="tico">🌐</div>
+          <div class="tnm">HTML</div>
+        </div>
+        <div class="titem reveal" style="transition-delay: 0.3s;">
+          <div class="tico">🎨</div>
+          <div class="tnm">CSS</div>
+        </div>
+        <div class="titem reveal" style="transition-delay: 0.4s;">
+          <div class="tico">⚙️</div>
+          <div class="tnm">JavaScript</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section id="contact">
+    <div>
+
+      <div class="stag reveal">06 / Contact</div>
+      <h2 class="stitle reveal" style="transition-delay: 0.1s;">Let's<br><em>Connect.</em></h2>
+
+      <p class="cintro reveal" style="transition-delay: 0.2s;">
+        Open to opportunities, collabs and cool conversations. Reach out anytime!
+      </p>
+
+      <div class="clinks">
+
+        <!-- Gmail — opens Gmail compose directly in browser -->
+        <a
+          href="https://mail.google.com/mail/?view=cm&to=nishant22mani@gmail.com"
+          target="_blank"
+          class="clink reveal"
+          style="transition-delay: 0.3s;"
+        >
+          <span class="cico">✉️</span>
+          <span class="clbl">Gmail</span>
+          <span class="cval">nishant22mani@gmail.com</span>
+        </a>
+
+        <!-- GitHub -->
+        <a
+          href="https://github.com/maninishant"
+          target="_blank"
+          class="clink reveal"
+          style="transition-delay: 0.4s;"
+        >
+          <span class="cico">🐙</span>
+          <span class="clbl">GitHub</span>
+          <span class="cval">github.com/maninishant</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a
+          href="https://www.linkedin.com/in/nishant-mani-65b9b42a2"
+          target="_blank"
+          class="clink reveal"
+          style="transition-delay: 0.5s;"
+        >
+          <span class="cico">🔗</span>
+          <span class="clbl">LinkedIn</span>
+          <span class="cval">linkedin.com/in/nishant-mani</span>
+        </a>
+
+        <!-- Medium -->
+        <a
+          href="https://medium.com/@nishant22mani"
+          target="_blank"
+          class="clink reveal"
+          style="transition-delay: 0.6s;"
+        >
+          <span class="cico" style="display: flex; align-items: center; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 195 195" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="59"  cy="97.5" rx="59" ry="59" fill="currentColor" opacity="0.85"/>
+              <ellipse cx="145" cy="97.5" rx="34" ry="49" fill="currentColor" opacity="0.6"/>
+              <ellipse cx="185" cy="97.5" rx="10" ry="38" fill="currentColor" opacity="0.45"/>
+            </svg>
+          </span>
+          <span class="clbl">Medium</span>
+          <span class="cval">medium.com/@nishant22mani</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+ <script src="script.js"></script>
+
 </body>
 </html>
